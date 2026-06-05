@@ -1,0 +1,63 @@
+[gd_resource type="Theme" format=3 uid="uid://mkyc7o2w4uol"]
+
+[ext_resource type="Texture2D" uid="uid://6q0oxk1olhl1" path="res://assets/Prinbles_Asset_Robin (v 1.1) (9_5_2023)/png/Button/Rect/Fill/Default.png" id="btn_default"]
+[ext_resource type="Texture2D" uid="uid://clx06o061ef8" path="res://assets/Prinbles_Asset_Robin (v 1.1) (9_5_2023)/png/Button/Rect/Fill/Hover.png" id="btn_hover"]
+[ext_resource type="FontFile" uid="uid://blfdbm6sq5gfc" path="res://assets/fonts/Ubuntu-Regular.ttf" id="ubuntu_regular"]
+
+[sub_resource type="StyleBoxTexture" id="btn_disabled"]
+content_margin_left = 48.0
+content_margin_top = 20.0
+content_margin_right = 48.0
+content_margin_bottom = 20.0
+texture = ExtResource("btn_default")
+texture_margin_left = 22.0
+texture_margin_top = 16.0
+texture_margin_right = 22.0
+texture_margin_bottom = 16.0
+modulate_color = Color(1, 1, 1, 0.55)
+
+[sub_resource type="StyleBoxTexture" id="btn_hover"]
+content_margin_left = 48.0
+content_margin_top = 20.0
+content_margin_right = 48.0
+content_margin_bottom = 20.0
+texture = ExtResource("btn_hover")
+texture_margin_left = 22.0
+texture_margin_top = 16.0
+texture_margin_right = 22.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="btn_normal"]
+content_margin_left = 48.0
+content_margin_top = 20.0
+content_margin_right = 48.0
+content_margin_bottom = 20.0
+texture = ExtResource("btn_default")
+texture_margin_left = 22.0
+texture_margin_top = 16.0
+texture_margin_right = 22.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="btn_pressed"]
+content_margin_left = 48.0
+content_margin_top = 28.0
+content_margin_right = 48.0
+content_margin_bottom = 16.0
+texture = ExtResource("btn_hover")
+texture_margin_left = 22.0
+texture_margin_top = 16.0
+texture_margin_right = 22.0
+texture_margin_bottom = 16.0
+
+[resource]
+Button/colors/font_color = Color(0.35, 0.24, 0.2, 1)
+Button/colors/font_disabled_color = Color(0.35, 0.24, 0.2, 0.5)
+Button/colors/font_hover_color = Color(0.28, 0.18, 0.15, 1)
+Button/colors/font_pressed_color = Color(0.42, 0.3, 0.24, 1)
+Button/font_sizes/font_size = 64
+Button/fonts/font = ExtResource("ubuntu_regular")
+Button/styles/disabled = SubResource("btn_disabled")
+Button/styles/focus = SubResource("btn_hover")
+Button/styles/hover = SubResource("btn_hover")
+Button/styles/normal = SubResource("btn_normal")
+Button/styles/pressed = SubResource("btn_pressed")

@@ -1,0 +1,28 @@
+---
+description: Архитектурные соглашения и структура проекта
+globs: *
+alwaysApply: true
+---
+
+# Архитектура проекта Filling
+
+- **Сцены (`scenes/`)**: Экраны приложения — `boot`, `main`, `settings`, `about`, варианты игры в `scenes/game/`.
+- **Старт**: [`scenes/boot/boot_scene.tscn`](scenes/boot/boot_scene.tscn) → главное меню.
+- **Игра**: [`scenes/game/game.gd`](scenes/game/game.gd) + `game_small.tscn` / `game_large.tscn` / `game_random.tscn` (UID малой сцены `uid://c44eua7bbldcb`).
+- **Виджеты (`widgets/`)**: Вся игровая логика по слоям:
+  - `widgets/board/` — `BoardModel`, `BoardView`, `BoardFieldSetup`
+  - `widgets/game_session/` — `GameSessionState`
+  - `widgets/game_input/` — `InputController`, `BoardCameraController`
+  - `widgets/game_rules/` — `MoveValidator`
+  - `widgets/game_transition/` — `TransitionPlayer`, `WaveLayerRunner`
+  - `widgets/game_hud/` — `HUDController`
+  - `widgets/cell_fx/` — оверлей анимации клеток
+- **UI (`uis/`)**: `GameOverUI`, `game_pause_menu` и др.
+- **Autoload**: `GameSettings`, `MusicManager`.
+- **Ассеты (`assets/`)**: Текстуры 16×16.
+
+## Правила внесения изменений
+- Соблюдайте минимальный diff при изменениях.
+- **Никогда** не изменяйте содержимое папки `.godot/`.
+- Не добавляйте новые зависимости без явного разрешения.
+- Новые виджеты — в `widgets/`, экраны — в `scenes/`, оверлеи — в `uis/`.

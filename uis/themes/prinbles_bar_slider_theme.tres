@@ -1,0 +1,34 @@
+[gd_resource type="Theme" load_steps=5 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Prinbles_Asset_Robin (v 1.1) (9_5_2023)/png/Bar/Background.png" id="bar_bg"]
+[ext_resource type="Texture2D" path="res://assets/Prinbles_Asset_Robin (v 1.1) (9_5_2023)/png/Bar/Line.png" id="bar_fill"]
+
+[sub_resource type="StyleBoxTexture" id="slider_track"]
+texture = ExtResource("bar_bg")
+texture_margin_left = 16.0
+texture_margin_top = 12.0
+texture_margin_right = 16.0
+texture_margin_bottom = 12.0
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="grabber_area"]
+texture = ExtResource("bar_bg")
+texture_margin_left = 16.0
+texture_margin_top = 12.0
+texture_margin_right = 16.0
+texture_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxTexture" id="grabber"]
+texture = ExtResource("bar_fill")
+texture_margin_left = 8.0
+texture_margin_top = 6.0
+texture_margin_right = 8.0
+texture_margin_bottom = 6.0
+
+[resource]
+HSlider/icons/grabber = ExtResource("bar_fill")
+HSlider/icons/grabber_highlight = ExtResource("bar_fill")
+HSlider/styles/grabber_area = SubResource("grabber_area")
+HSlider/styles/grabber_area_highlight = SubResource("grabber_area")
+HSlider/styles/slider = SubResource("slider_track")

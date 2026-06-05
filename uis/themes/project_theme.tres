@@ -1,0 +1,14 @@
+[gd_resource type="Theme" load_steps=3 format=3]
+
+[ext_resource type="FontFile" path="res://assets/fonts/Ubuntu-Regular.ttf" id="ubuntu_regular"]
+[ext_resource type="FontFile" path="res://assets/fonts/Ubuntu-Bold.ttf" id="ubuntu_bold"]
+
+[resource]
+default_font = ExtResource("ubuntu_regular")
+default_font_size = 24
+Button/fonts/font = ExtResource("ubuntu_regular")
+CheckBox/fonts/font = ExtResource("ubuntu_regular")
+Label/fonts/font = ExtResource("ubuntu_regular")
+LinkButton/fonts/font = ExtResource("ubuntu_regular")
+RichTextLabel/fonts/normal_font = ExtResource("ubuntu_regular")
+RichTextLabel/fonts/bold_font = ExtResource("ubuntu_bold")

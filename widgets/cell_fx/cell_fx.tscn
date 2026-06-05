@@ -1,0 +1,43 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://widgets/cell_fx/cell_fx.gd" id="1_cellfx"]
+
+[sub_resource type="Gradient" id="Gradient_spark"]
+offsets = PackedFloat32Array(0, 0.65, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.85, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_spark"]
+gradient = SubResource("Gradient_spark")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_burst"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 2.5
+direction = Vector3(1, 0, 0)
+spread = 180.0
+initial_velocity_min = 140.0
+initial_velocity_max = 220.0
+radial_accel_min = 55.0
+radial_accel_max = 110.0
+gravity = Vector3(0, 240, 0)
+scale_min = 1.6
+scale_max = 2.8
+color = Color(1, 1, 1, 1)
+color_ramp = SubResource("GradientTexture1D_spark")
+
+[node name="CellFx" type="Node2D"]
+script = ExtResource("1_cellfx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 10
+visible = false
+centered = true
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+z_index = 11
+emitting = false
+amount = 5
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_burst")

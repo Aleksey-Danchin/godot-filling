@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dls4m80hpdra4"
+path="res://.godot/imported/Lo-Fi Beats To Ride Dragons With.wav-960d104c6e9f92c1a5720ab83bf8eeeb.sample"
+
+[deps]
+
+source_file="res://sounds/Lo-Fi Beats To Ride Dragons With.wav"
+dest_files=["res://.godot/imported/Lo-Fi Beats To Ride Dragons With.wav-960d104c6e9f92c1a5720ab83bf8eeeb.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bwsljunsncaw5"
+path="res://.godot/imported/Brain Empty.wav-3616f4b05d0bd117ea8dca405b0b5916.sample"
+
+[deps]
+
+source_file="res://sounds/Brain Empty.wav"
+dest_files=["res://.godot/imported/Brain Empty.wav-3616f4b05d0bd117ea8dca405b0b5916.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

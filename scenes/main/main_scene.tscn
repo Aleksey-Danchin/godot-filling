@@ -1,0 +1,112 @@
+[gd_scene format=3 uid="uid://5j3toe7u8duv"]
+
+[ext_resource type="Script" uid="uid://b6c6ol13fa2g2" path="res://scenes/main/main_scene.gd" id="1_ei2sf"]
+[ext_resource type="Script" uid="uid://b71wbplx01dj8" path="res://widgets/background/parallax_background.gd" id="2_parallax"]
+[ext_resource type="Theme" path="res://uis/themes/robin_menu_theme.tres" id="3_menu_theme"]
+[ext_resource type="Script" path="res://widgets/menu_navigation/menu_slide_transition.gd" id="4_slide"]
+
+[node name="MainScene" type="Control" unique_id=1669695075]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ei2sf")
+
+[node name="ParallaxCanvas" type="CanvasLayer" parent="." unique_id=1166192259]
+layer = -10
+
+[node name="ParallaxBackground" type="Node2D" parent="ParallaxCanvas" unique_id=1930754288]
+script = ExtResource("2_parallax")
+
+[node name="ContentHost" type="Control" parent="." unique_id=1949109691]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuSlideTransition" type="Node" parent="ContentHost"]
+script = ExtResource("4_slide")
+
+[node name="MenuSlideSlot" type="Control" parent="ContentHost"]
+layout_mode = 0
+offset_right = 1080.0
+offset_bottom = 1920.0
+
+[node name="MenuPanel" type="MarginContainer" parent="ContentHost/MenuSlideSlot" unique_id=965457841]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 48
+
+[node name="VBox" type="VBoxContainer" parent="ContentHost/MenuSlideSlot/MenuPanel" unique_id=1033491728]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Title" type="Label" parent="ContentHost/MenuSlideSlot/MenuPanel/VBox" unique_id=542006608]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 72
+text = "Filling"
+horizontal_alignment = 1
+
+[node name="MenuButtons" type="CenterContainer" parent="ContentHost/MenuSlideSlot/MenuPanel/VBox" unique_id=969334786]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ButtonsVBox" type="VBoxContainer" parent="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons" unique_id=1737286012]
+layout_mode = 2
+theme = ExtResource("3_menu_theme")
+theme_override_constants/separation = 32
+
+[node name="SmallButton" type="Button" parent="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox" unique_id=1775426230]
+custom_minimum_size = Vector2(600, 144)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Малое поле"
+
+[node name="LargeButton" type="Button" parent="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox" unique_id=1296726655]
+custom_minimum_size = Vector2(600, 144)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Большое поле"
+
+[node name="RandomButton" type="Button" parent="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox" unique_id=1682174354]
+custom_minimum_size = Vector2(600, 144)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Случайное поле"
+
+[node name="Label" type="Label" parent="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox" unique_id=1372393330]
+layout_mode = 2
+theme_override_font_sizes/font_size = 74
+text = " "
+
+[node name="SettingsButton" type="Button" parent="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox" unique_id=1380634789]
+custom_minimum_size = Vector2(600, 144)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Настройки"
+
+[node name="AboutButton" type="Button" parent="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox" unique_id=1528665386]
+custom_minimum_size = Vector2(600, 144)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Об игре"
+
+[connection signal="pressed" from="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox/SmallButton" to="." method="_on_small_game_pressed"]
+[connection signal="pressed" from="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox/LargeButton" to="." method="_on_large_game_pressed"]
+[connection signal="pressed" from="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox/RandomButton" to="." method="_on_random_game_pressed"]
+[connection signal="pressed" from="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox/SettingsButton" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox/AboutButton" to="." method="_on_about_pressed"]

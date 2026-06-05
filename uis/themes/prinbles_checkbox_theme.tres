@@ -1,0 +1,9 @@
+[gd_resource type="Theme" load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/Prinbles_Asset_Robin (v 1.1) (9_5_2023)/png/Button/Square/Fill/Default.png" id="box_off"]
+[ext_resource type="Texture2D" path="res://assets/Prinbles_Asset_Robin (v 1.1) (9_5_2023)/png/Button/Square/Fill/Hover.png" id="box_on"]
+
+[resource]
+CheckBox/icons/checked = ExtResource("box_on")
+CheckBox/icons/unchecked = ExtResource("box_off")
+CheckBox/font_sizes/font_size = 40
