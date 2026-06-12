@@ -8,11 +8,18 @@ var turns: int = 0
 var is_active: bool = true
 var is_paused: bool = false
 var is_animating: bool = false
+var turn_limit_enabled: bool = true
 var history: Array[Dictionary] = []
 
 
-func start_new_game(turn_limit: int = max_turns) -> void:
+func configure_turn_limit(enabled: bool, turn_limit: int = max_turns) -> void:
+	turn_limit_enabled = enabled
 	max_turns = max(1, turn_limit)
+
+
+func start_new_game(turn_limit: int = max_turns) -> void:
+	if turn_limit_enabled:
+		max_turns = max(1, turn_limit)
 	turns = 0
 	is_active = true
 	is_paused = false
@@ -28,7 +35,11 @@ func register_move(move_data: Dictionary) -> void:
 
 
 func can_continue() -> bool:
-	return is_active and !is_paused and turns < max_turns
+	if !is_active or is_paused:
+		return false
+	if !turn_limit_enabled:
+		return true
+	return turns < max_turns
 
 
 func set_animating(value: bool) -> void:

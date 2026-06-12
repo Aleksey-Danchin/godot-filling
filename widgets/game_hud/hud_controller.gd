@@ -13,6 +13,7 @@ var horizontal_progress: ProgressBar = null
 var hud_card: PanelContainer = null
 var root_control: Control = null
 var top_margin: MarginContainer = null
+var _turn_limit_ui_visible: bool = true
 
 
 func _ready() -> void:
@@ -61,8 +62,17 @@ func _fit_to_viewport() -> void:
 		top_margin.set_size(viewport_size)
 
 
-func sync_from_session(session: Node) -> void:
+func set_turn_limit_ui_visible(visible: bool) -> void:
+	_turn_limit_ui_visible = visible
+	if horizontal_progress != null:
+		horizontal_progress.visible = visible
 	if turns_label != null:
+		turns_label.visible = visible
+	apply_layout()
+
+
+func sync_from_session(session: Node) -> void:
+	if turns_label != null and _turn_limit_ui_visible:
 		turns_label.text = "Ходов: %d/%d" % [session.turns, session.max_turns]
 
 	if status_label == null:
@@ -74,13 +84,14 @@ func sync_from_session(session: Node) -> void:
 	else:
 		status_label.text = "Игра идет"
 
-	if horizontal_progress != null and horizontal_progress.has_method("sync_from_session"):
+	if horizontal_progress != null and _turn_limit_ui_visible \
+			and horizontal_progress.has_method("sync_from_session"):
 		horizontal_progress.sync_from_session(session)
 
 
 func apply_layout() -> void:
 	if horizontal_progress != null:
-		horizontal_progress.visible = true
+		horizontal_progress.visible = _turn_limit_ui_visible
 		if horizontal_progress.get_parent() is BoxContainer:
 			horizontal_progress.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			horizontal_progress.custom_minimum_size = Vector2(0.0, PROGRESS_THICKNESS)

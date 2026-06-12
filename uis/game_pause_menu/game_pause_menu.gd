@@ -19,6 +19,7 @@ var _panel_rest_top: float = 0.0
 var _panel_rest_bottom: float = 0.0
 var _backdrop_target_alpha: float = 0.45
 var _is_animating: bool = false
+var _progress_toolbar_visible: bool = true
 
 
 func _ready() -> void:
@@ -33,10 +34,17 @@ func _ready() -> void:
 	call_deferred("_update_burger_position")
 
 
+func set_progress_toolbar_visible(visible: bool) -> void:
+	_progress_toolbar_visible = visible
+	_update_burger_position()
+
+
 func _update_burger_position(_arg: Variant = null) -> void:
 	if burger_button == null:
 		return
-	var top: float = PROGRESS_MARGIN + PROGRESS_THICKNESS + TOOLBAR_GAP
+	var top: float = PROGRESS_MARGIN
+	if _progress_toolbar_visible:
+		top += PROGRESS_THICKNESS + TOOLBAR_GAP
 	burger_button.offset_top = top
 	burger_button.offset_bottom = top + BURGER_HEIGHT
 

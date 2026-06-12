@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dkl7mu5hq2r1f" path="res://widgets/board/board_model.gd" id="2_model"]
 [ext_resource type="Script" path="res://widgets/board/board_presentation_state.gd" id="2_presentation"]
 [ext_resource type="Script" uid="uid://bfuyst6sp51bu" path="res://widgets/game_session/game_session_state.gd" id="3_session"]
+[ext_resource type="Script" path="res://widgets/level_rules/level_rules.gd" id="16_level_rules"]
 [ext_resource type="Texture2D" uid="uid://bffogaidy5ue3" path="res://assets/Textures16x16ByAndrox/Textures16x16/1a.png" id="4_tex1"]
 [ext_resource type="Script" uid="uid://dejgqaod2p134" path="res://widgets/board/board_view_tilemap.gd" id="4_view"]
 [ext_resource type="Texture2D" uid="uid://b5ogkqxpc28cw" path="res://assets/Textures16x16ByAndrox/Textures16x16/2a.png" id="5_tex2"]
@@ -95,6 +96,9 @@ script = ExtResource("2_presentation")
 
 [node name="GameSessionState" type="Node" parent="."]
 script = ExtResource("3_session")
+
+[node name="LevelRules" type="Node" parent="."]
+script = ExtResource("16_level_rules")
 
 [node name="BoardField" type="Node2D" parent="."]
 position = Vector2(78, 236.99998)

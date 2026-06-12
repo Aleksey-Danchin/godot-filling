@@ -12,6 +12,7 @@ const INTRO_SLIDE_SEC := 0.85
 @onready var board_field_setup: Node = $BoardFieldSetup
 @onready var board_model: Node = $BoardModel
 @onready var board_presentation_state: Node = $BoardPresentationState
+@onready var level_rules: Node = get_node_or_null("LevelRules")
 @onready var game_session_state: Node = $GameSessionState
 @onready var board_view: TileMapLayer = $BoardField/BoardView
 @onready var cell_fx_layer_manager: Node2D = $BoardField/BoardView/CellFxLayerManager
@@ -165,7 +166,7 @@ func _process_move(selected_color: int) -> void:
 		return
 
 	game_session_state.register_move(move_result)
-	if cell_flag_overlay.has_method("tick_after_move"):
+	if _flags_enabled() and cell_flag_overlay.has_method("tick_after_move"):
 		cell_flag_overlay.tick_after_move()
 	transition_player.play_wave(
 		move_result,
@@ -187,7 +188,7 @@ func _on_wave_playback_finished(move_result: Dictionary, move_generation: int) -
 
 
 func _on_cell_wave_started(coord: Vector2i) -> void:
-	if cell_flag_overlay.has_method("on_cell_wave_started"):
+	if _flags_enabled() and cell_flag_overlay.has_method("on_cell_wave_started"):
 		cell_flag_overlay.on_cell_wave_started(coord)
 
 
@@ -224,12 +225,13 @@ func _setup_board_for_new_session() -> void:
 	board_field_setup.apply(board_model, board_view)
 	if cell_fx_layer_manager.has_method("configure_for_board"):
 		cell_fx_layer_manager.configure_for_board(board_model)
-	if cell_flag_overlay.has_method("prepare_for_session"):
+	_apply_level_rules()
+	if _flags_enabled() and cell_flag_overlay.has_method("prepare_for_session"):
 		cell_flag_overlay.prepare_for_session(board_view, board_field, board_model)
 	_store_initial_board_snapshot()
 	board_presentation_state.reset_from_model(board_model, board_view)
 	board_model.refresh_available_move_values()
-	game_session_state.start_new_game(game_session_state.max_turns)
+	game_session_state.start_new_game(_session_turn_limit())
 	hud_controller.apply_layout()
 	hud_controller.sync_from_session(game_session_state)
 
@@ -264,11 +266,12 @@ func _on_pause_restart_requested() -> void:
 
 	if cell_fx_layer_manager.has_method("configure_for_board"):
 		cell_fx_layer_manager.configure_for_board(board_model)
-	if cell_flag_overlay.has_method("prepare_for_session"):
+	_apply_level_rules()
+	if _flags_enabled() and cell_flag_overlay.has_method("prepare_for_session"):
 		cell_flag_overlay.prepare_for_session(board_view, board_field, board_model)
 	board_presentation_state.reset_from_model(board_model, board_view)
 	board_model.refresh_available_move_values()
-	game_session_state.start_new_game(game_session_state.max_turns)
+	game_session_state.start_new_game(_session_turn_limit())
 	hud_controller.apply_layout()
 	hud_controller.sync_from_session(game_session_state)
 	board_field.position = _board_field_target_position
@@ -276,3 +279,26 @@ func _on_pause_restart_requested() -> void:
 
 func _on_pause_main_menu_requested() -> void:
 	await ScreenFader.transition_standard(MAIN_SCENE_PATH)
+
+
+func _apply_level_rules() -> void:
+	if level_rules == null or !level_rules.has_method("apply"):
+		return
+	level_rules.apply(
+		game_session_state,
+		hud_controller,
+		cell_flag_overlay,
+		game_pause_menu
+	)
+
+
+func _flags_enabled() -> bool:
+	if level_rules == null:
+		return true
+	return bool(level_rules.get("enable_flags"))
+
+
+func _session_turn_limit() -> int:
+	if level_rules != null and level_rules.get("max_turns") != null:
+		return int(level_rules.max_turns)
+	return game_session_state.max_turns
