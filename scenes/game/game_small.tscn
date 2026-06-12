@@ -1,40 +1,28 @@
 [gd_scene format=4 uid="uid://c44eua7bbldcb"]
 
-[ext_resource type="Script" uid="uid://cwwxlmo6066on" path="res://widgets/board/board_field_setup.gd" id="1_setup"]
-[ext_resource type="Script" uid="uid://btekei1wbeysm" path="res://scenes/game/game.gd" id="1_game"]
 [ext_resource type="Script" uid="uid://2guv7ipwewpo" path="res://widgets/game_input/board_camera_controller.gd" id="1_camera_ctrl"]
+[ext_resource type="Script" uid="uid://btekei1wbeysm" path="res://scenes/game/game.gd" id="1_game"]
+[ext_resource type="Script" uid="uid://cwwxlmo6066on" path="res://widgets/board/board_field_setup.gd" id="1_setup"]
 [ext_resource type="Script" uid="uid://dkl7mu5hq2r1f" path="res://widgets/board/board_model.gd" id="2_model"]
-[ext_resource type="Script" path="res://widgets/board/board_presentation_state.gd" id="2_presentation"]
+[ext_resource type="Script" uid="uid://duikxfo15s3cc" path="res://widgets/board/board_presentation_state.gd" id="2_presentation"]
 [ext_resource type="Script" uid="uid://bfuyst6sp51bu" path="res://widgets/game_session/game_session_state.gd" id="3_session"]
 [ext_resource type="Texture2D" uid="uid://bffogaidy5ue3" path="res://assets/Textures16x16ByAndrox/Textures16x16/1a.png" id="4_tex1"]
 [ext_resource type="Script" uid="uid://dejgqaod2p134" path="res://widgets/board/board_view_tilemap.gd" id="4_view"]
-[ext_resource type="Texture2D" uid="uid://b5ogkqxpc28cw" path="res://assets/Textures16x16ByAndrox/Textures16x16/2a.png" id="5_tex2"]
 [ext_resource type="Script" uid="uid://dbh8r8k8ba1it" path="res://widgets/game_input/input_controller.gd" id="5_input"]
+[ext_resource type="Texture2D" uid="uid://b5ogkqxpc28cw" path="res://assets/Textures16x16ByAndrox/Textures16x16/2a.png" id="5_tex2"]
 [ext_resource type="Texture2D" uid="uid://dwvscx2dxqc7q" path="res://assets/Textures16x16ByAndrox/Textures16x16/4a.png" id="6_tex3"]
 [ext_resource type="Script" uid="uid://drlfxdr3d2wvk" path="res://widgets/game_rules/move_validator.gd" id="6_validator"]
-[ext_resource type="Script" uid="uid://bgyo48gw85j2f" path="res://widgets/game_transition/transition_player.gd" id="7_transition"]
 [ext_resource type="Texture2D" uid="uid://bfg2nlsnogq6" path="res://assets/Textures16x16ByAndrox/Textures16x16/6g.png" id="7_tex4"]
+[ext_resource type="Script" uid="uid://bgyo48gw85j2f" path="res://widgets/game_transition/transition_player.gd" id="7_transition"]
 [ext_resource type="Script" uid="uid://bye3dkt11d2r5" path="res://widgets/game_hud/hud_controller.gd" id="8_hud"]
-[ext_resource type="Script" path="res://widgets/game_hud/turns_limit_progress.gd" id="8_progress"]
-[ext_resource type="Texture2D" path="res://assets/Prinbles_Asset_Robin (v 1.1) (9_5_2023)/png/Counter/Default.png" id="8_card"]
+[ext_resource type="Script" uid="uid://lk0ugxu1frep" path="res://widgets/game_hud/turns_limit_progress.gd" id="8_progress"]
 [ext_resource type="Texture2D" uid="uid://b11es31gt1l5y" path="res://assets/Textures16x16ByAndrox/Textures16x16/8a.png" id="8_tex5"]
+[ext_resource type="Script" uid="uid://cki7cbh3x257l" path="res://widgets/cell_fx/cell_fx_layer_manager.gd" id="9_fx_layers"]
 [ext_resource type="Texture2D" uid="uid://dpgyjdrjwf3s5" path="res://assets/Textures16x16ByAndrox/Textures16x16/7a.png" id="9_tex6"]
-[ext_resource type="Script" path="res://widgets/cell_fx/cell_fx_layer_manager.gd" id="9_fx_layers"]
 [ext_resource type="Texture2D" uid="uid://bdmewo4n1j4kg" path="res://assets/Textures16x16ByAndrox/Textures16x16/5g.png" id="10_tex7"]
 [ext_resource type="Texture2D" uid="uid://846pfyawikcw" path="res://assets/Textures16x16ByAndrox/Textures16x16/2e.png" id="11_tex8"]
 [ext_resource type="PackedScene" uid="uid://btimu00uohjir" path="res://uis/GameOverUI/game_over_ui.tscn" id="12_gameover"]
 [ext_resource type="PackedScene" path="res://uis/game_pause_menu/game_pause_menu.tscn" id="13_pause"]
-
-[sub_resource type="StyleBoxTexture" id="hud_card_style"]
-texture = ExtResource("8_card")
-texture_margin_left = 16.0
-texture_margin_top = 12.0
-texture_margin_right = 16.0
-texture_margin_bottom = 12.0
-content_margin_left = 20.0
-content_margin_top = 14.0
-content_margin_right = 20.0
-content_margin_bottom = 14.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hkgtx"]
 texture = ExtResource("4_tex1")
@@ -78,118 +66,115 @@ sources/5 = SubResource("TileSetAtlasSource_x0ngc")
 sources/6 = SubResource("TileSetAtlasSource_5kklv")
 sources/7 = SubResource("TileSetAtlasSource_f8wg8")
 
-[node name="Game" type="Node2D"]
+[sub_resource type="StyleBoxFlat" id="hud_card_style"]
+content_margin_left = 20.0
+content_margin_top = 14.0
+content_margin_right = 20.0
+content_margin_bottom = 14.0
+bg_color = Color(0, 0, 0, 0.5)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Game" type="Node2D" unique_id=642700113]
 script = ExtResource("1_game")
 
-[node name="BoardFieldSetup" type="Node" parent="."]
+[node name="BoardFieldSetup" type="Node" parent="." unique_id=1643362453]
 script = ExtResource("1_setup")
-setup_mode = 0
 
-[node name="BoardModel" type="Node" parent="."]
+[node name="BoardModel" type="Node" parent="." unique_id=615494282]
 script = ExtResource("2_model")
 
-[node name="BoardPresentationState" type="Node" parent="."]
+[node name="BoardPresentationState" type="Node" parent="." unique_id=573324109]
 script = ExtResource("2_presentation")
 
-[node name="GameSessionState" type="Node" parent="."]
+[node name="GameSessionState" type="Node" parent="." unique_id=1173101328]
 script = ExtResource("3_session")
 
-[node name="BoardField" type="Node2D" parent="."]
+[node name="BoardField" type="Node2D" parent="." unique_id=1104720200]
 position = Vector2(78, 236.99998)
 scale = Vector2(9.83, 9.83)
 
-[node name="BoardView" type="TileMapLayer" parent="BoardField"]
-tile_map_data = PackedByteArray("AAAAAAAABgAAAAAAAAABAAAABgAAAAAAAAACAAAABwAAAAAAAAADAAAABgAAAAAAAAAEAAAAAgAAAAAAAAAFAAAAAgAAAAAAAAAAAAEAAQAAAAAAAAABAAEAAgAAAAAAAAACAAEAAQAAAAAAAAADAAEAAgAAAAAAAAAEAAEABQAAAAAAAAAFAAEAAwAAAAAAAAAAAAIAAQAAAAAAAAABAAIAAgAAAAAAAAACAAIABgAAAAAAAAADAAIAAgAAAAAAAAAEAAIAAAAAAAAAAAAFAAIAAgAAAAAAAAAAAAMAAAAAAAAAAAABAAMABAAAAAAAAAACAAMABgAAAAAAAAADAAMABAAAAAAAAAAEAAMAAwAAAAAAAAAFAAMAAgAAAAAAAAAAAAQAAgAAAAAAAAABAAQABgAAAAAAAAACAAQAAQAAAAAAAAADAAQAAQAAAAAAAAAEAAQAAgAAAAAAAAAFAAQAAQAAAAAAAAAAAAUAAgAAAAAAAAABAAUAAgAAAAAAAAACAAUABwAAAAAAAAADAAUAAwAAAAAAAAAEAAUABgAAAAAAAAAFAAUAAgAAAAAAAAAAAAYABwAAAAAAAAABAAYABAAAAAAAAAACAAYAAAAAAAAAAAADAAYAAgAAAAAAAAAEAAYABQAAAAAAAAAFAAYAAAAAAAAAAAAAAAcAAQAAAAAAAAABAAcABQAAAAAAAAACAAcABgAAAAAAAAADAAcABgAAAAAAAAAEAAcABgAAAAAAAAAFAAcAAAAAAAAAAAAAAAgABAAAAAAAAAABAAgAAQAAAAAAAAACAAgABQAAAAAAAAADAAgAAQAAAAAAAAAEAAgAAwAAAAAAAAAFAAgAAwAAAAAAAAA=")
+[node name="BoardView" type="TileMapLayer" parent="BoardField" unique_id=2053119711]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAQAAAAAAAAADAAAABwAAAAAAAAAEAAAAAgAAAAAAAAAFAAAAAwAAAAAAAAAAAAEABgAAAAAAAAABAAEABwAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAAFAAEAAQAAAAAAAAAAAAIAAgAAAAAAAAABAAIAAgAAAAAAAAACAAIABgAAAAAAAAADAAIAAwAAAAAAAAAEAAIABQAAAAAAAAAFAAIAAAAAAAAAAAAAAAMABAAAAAAAAAABAAMAAgAAAAAAAAACAAMABQAAAAAAAAADAAMABQAAAAAAAAAEAAMAAgAAAAAAAAAFAAMAAAAAAAAAAAAAAAQABwAAAAAAAAABAAQAAwAAAAAAAAACAAQAAQAAAAAAAAADAAQAAAAAAAAAAAAEAAQABQAAAAAAAAAFAAQAAgAAAAAAAAAAAAUAAAAAAAAAAAABAAUAAQAAAAAAAAACAAUABAAAAAAAAAADAAUAAAAAAAAAAAAEAAUAAwAAAAAAAAAFAAUABwAAAAAAAAAAAAYAAAAAAAAAAAABAAYAAQAAAAAAAAACAAYAAgAAAAAAAAADAAYAAQAAAAAAAAAEAAYABQAAAAAAAAAFAAYABQAAAAAAAAAAAAcAAgAAAAAAAAABAAcABAAAAAAAAAACAAcABAAAAAAAAAADAAcABQAAAAAAAAAEAAcAAgAAAAAAAAAFAAcAAwAAAAAAAAAAAAgABAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAgAAAAAAAAADAAgABgAAAAAAAAAEAAgABQAAAAAAAAAFAAgAAgAAAAAAAAA=")
 tile_set = SubResource("TileSet_lmrul")
 script = ExtResource("4_view")
 
-[node name="CellFxLayerManager" type="Node2D" parent="BoardField/BoardView"]
+[node name="CellFxLayerManager" type="Node2D" parent="BoardField/BoardView" unique_id=2003165126]
 script = ExtResource("9_fx_layers")
 
-[node name="BoardCamera" type="Camera2D" parent="."]
+[node name="BoardCamera" type="Camera2D" parent="." unique_id=781667489]
 position = Vector2(540, 700)
-zoom = Vector2(1, 1)
 
-[node name="BoardCameraController" type="Node" parent="."]
+[node name="BoardCameraController" type="Node" parent="." unique_id=1773555158]
 script = ExtResource("1_camera_ctrl")
-camera_path = NodePath("../BoardCamera")
-[node name="InputController" type="Node" parent="."]
-script = ExtResource("5_input")
-camera_controller_path = NodePath("../BoardCameraController")
 
-[node name="MoveValidator" type="Node" parent="."]
+[node name="InputController" type="Node" parent="." unique_id=350853241]
+script = ExtResource("5_input")
+
+[node name="MoveValidator" type="Node" parent="." unique_id=618155741]
 script = ExtResource("6_validator")
 
-[node name="TransitionPlayer" type="Node" parent="."]
+[node name="TransitionPlayer" type="Node" parent="." unique_id=1592269886]
 script = ExtResource("7_transition")
 
-[node name="HUDController" type="CanvasLayer" parent="."]
+[node name="HUDController" type="CanvasLayer" parent="." unique_id=1760179000]
 script = ExtResource("8_hud")
-turns_label_path = NodePath("Root/HudCard/CardMargin/Labels/TurnsLabel")
-status_label_path = NodePath("Root/HudCard/CardMargin/Labels/StatusLabel")
-horizontal_progress_path = NodePath("Root/HorizontalTurnsProgress")
-vertical_progress_path = NodePath("Root/VerticalTurnsProgress")
+turns_label_path = NodePath("Root/TopMargin/TopVBox/HudCard/CardMargin/Labels/TurnsLabel")
+status_label_path = NodePath("Root/TopMargin/TopVBox/HudCard/CardMargin/Labels/StatusLabel")
+horizontal_progress_path = NodePath("Root/TopMargin/TopVBox/HorizontalTurnsProgress")
 
-[node name="Root" type="Control" parent="HUDController"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Root" type="Control" parent="HUDController" unique_id=871495665]
 mouse_filter = 2
 
-[node name="HudCard" type="PanelContainer" parent="HUDController/Root"]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 620.0
-offset_bottom = 132.0
+[node name="TopMargin" type="MarginContainer" parent="HUDController/Root"]
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="TopVBox" type="VBoxContainer" parent="HUDController/Root/TopMargin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="HorizontalTurnsProgress" type="ProgressBar" parent="HUDController/Root/TopMargin/TopVBox" unique_id=1780099116]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+script = ExtResource("8_progress")
+
+[node name="HudCard" type="PanelContainer" parent="HUDController/Root/TopMargin/TopVBox" unique_id=1720141233]
+layout_mode = 2
+size_flags_horizontal = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("hud_card_style")
 
-[node name="CardMargin" type="MarginContainer" parent="HUDController/Root/HudCard"]
+[node name="CardMargin" type="MarginContainer" parent="HUDController/Root/TopMargin/TopVBox/HudCard" unique_id=1431101653]
 layout_mode = 2
 
-[node name="Labels" type="VBoxContainer" parent="HUDController/Root/HudCard/CardMargin"]
+[node name="Labels" type="VBoxContainer" parent="HUDController/Root/TopMargin/TopVBox/HudCard/CardMargin" unique_id=26001215]
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="TurnsLabel" type="Label" parent="HUDController/Root/HudCard/CardMargin/Labels"]
+[node name="TurnsLabel" type="Label" parent="HUDController/Root/TopMargin/TopVBox/HudCard/CardMargin/Labels" unique_id=462556796]
 layout_mode = 2
 mouse_filter = 2
 theme_override_font_sizes/font_size = 30
 text = "Ходов: 0/0"
 
-[node name="StatusLabel" type="Label" parent="HUDController/Root/HudCard/CardMargin/Labels"]
+[node name="StatusLabel" type="Label" parent="HUDController/Root/TopMargin/TopVBox/HudCard/CardMargin/Labels" unique_id=1198762200]
 layout_mode = 2
 mouse_filter = 2
 theme_override_font_sizes/font_size = 24
 text = "Игра идет"
 
-[node name="HorizontalTurnsProgress" type="TextureProgressBar" parent="HUDController/Root"]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 148.0
-offset_right = 340.0
-offset_bottom = 200.0
-mouse_filter = 2
-script = ExtResource("8_progress")
-
-[node name="VerticalTurnsProgress" type="TextureProgressBar" parent="HUDController/Root"]
-visible = false
-layout_mode = 0
-offset_left = 980.0
-offset_top = 120.0
-offset_right = 1032.0
-offset_bottom = 400.0
-mouse_filter = 2
-script = ExtResource("8_progress")
-
-[node name="GameOverUI" parent="." instance=ExtResource("12_gameover")]
+[node name="GameOverUI" parent="." unique_id=1476677158 instance=ExtResource("12_gameover")]
 visible = false
 
-[node name="GamePauseMenu" parent="." instance=ExtResource("13_pause")]
+[node name="GamePauseMenu" parent="." unique_id=1312587529 instance=ExtResource("13_pause")]
 
 [connection signal="play_again" from="GameOverUI" to="." method="_on_game_over_ui_play_again"]
 [connection signal="show_map" from="GameOverUI" to="." method="_on_game_over_ui_show_map"]

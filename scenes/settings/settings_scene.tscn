@@ -4,14 +4,13 @@
 [ext_resource type="Theme" path="res://uis/themes/robin_menu_theme.tres" id="2_robin"]
 [ext_resource type="Theme" path="res://uis/themes/prinbles_bar_slider_theme.tres" id="3_slider"]
 [ext_resource type="Theme" path="res://uis/themes/prinbles_checkbox_theme.tres" id="4_checkbox"]
-[ext_resource type="Texture2D" path="res://assets/Prinbles_Asset_Robin (v 1.1) (9_5_2023)/png/Counter/Default.png" id="5_card"]
 
-[sub_resource type="StyleBoxTexture" id="card_style"]
-texture = ExtResource("5_card")
-texture_margin_left = 20.0
-texture_margin_top = 16.0
-texture_margin_right = 20.0
-texture_margin_bottom = 16.0
+[sub_resource type="StyleBoxFlat" id="card_style"]
+bg_color = Color(0, 0, 0, 0.5)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 content_margin_left = 40.0
 content_margin_top = 36.0
 content_margin_right = 40.0
@@ -28,29 +27,27 @@ script = ExtResource("1_settings")
 
 [node name="Layout" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -360.0
-offset_top = -340.0
-offset_right = 360.0
-offset_bottom = 340.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = 48.0
+offset_right = -48.0
+offset_bottom = -48.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 24
 
-[node name="BackButton" type="Button" parent="Layout"]
-custom_minimum_size = Vector2(0, 96)
+[node name="TitleLabel" type="Label" parent="Layout"]
 layout_mode = 2
-theme = ExtResource("2_robin")
-theme_override_font_sizes/font_size = 40
-text = "← Настройки"
+theme_override_font_sizes/font_size = 56
+text = "Настройки"
+horizontal_alignment = 1
 
 [node name="SettingsCard" type="PanelContainer" parent="Layout"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_styles/panel = SubResource("card_style")
 
 [node name="CardMargin" type="MarginContainer" parent="Layout/SettingsCard"]
@@ -73,47 +70,27 @@ theme = ExtResource("4_checkbox")
 text = "Музыка"
 button_pressed = true
 
-[node name="VolumeSlider" type="HSlider" parent="Layout/SettingsCard/CardMargin/VBox"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 64)
+[node name="VolumeSliderWrap" type="CenterContainer" parent="Layout/SettingsCard/CardMargin/VBox"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="VolumeSlider" type="HSlider" parent="Layout/SettingsCard/CardMargin/VBox/VolumeSliderWrap"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(880, 56)
+layout_mode = 2
+scale = Vector2(0.42, 0.42)
 theme = ExtResource("3_slider")
 min_value = 0.0
 max_value = 1.0
 step = 0.01
 value = 0.7
 
-[node name="ProgressLabel" type="Label" parent="Layout/SettingsCard/CardMargin/VBox"]
+[node name="BackButton" type="Button" parent="Layout"]
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
-theme_override_font_sizes/font_size = 44
-text = "Счётчик ходов"
-
-[node name="ProgressHBox" type="HBoxContainer" parent="Layout/SettingsCard/CardMargin/VBox"]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="ProgressHorizontal" type="Button" parent="Layout/SettingsCard/CardMargin/VBox/ProgressHBox"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 72)
-layout_mode = 2
-size_flags_horizontal = 3
 theme = ExtResource("2_robin")
-theme_override_font_sizes/font_size = 32
-toggle_mode = true
-button_pressed = true
-text = "Горизонтальный"
-
-[node name="ProgressVertical" type="Button" parent="Layout/SettingsCard/CardMargin/VBox/ProgressHBox"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 72)
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("2_robin")
-theme_override_font_sizes/font_size = 32
-toggle_mode = true
-text = "Вертикальный"
+theme_override_font_sizes/font_size = 40
+text = "← Назад"
 
 [connection signal="pressed" from="Layout/BackButton" to="." method="_on_back_pressed"]
-[connection signal="toggled" from="Layout/SettingsCard/CardMargin/VBox/ProgressHBox/ProgressHorizontal" to="." method="_on_progress_horizontal_toggled"]
-[connection signal="toggled" from="Layout/SettingsCard/CardMargin/VBox/ProgressHBox/ProgressVertical" to="." method="_on_progress_vertical_toggled"]

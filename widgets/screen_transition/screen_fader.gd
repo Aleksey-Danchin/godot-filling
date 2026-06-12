@@ -51,12 +51,12 @@ func fade_in(duration_sec: float) -> void:
 	_overlay.visible = true
 	_overlay.modulate.a = 1.0
 	_is_fading = true
-	_awaiting_reveal = false
 	var tween: Tween = create_tween()
 	tween.tween_property(_overlay, "modulate:a", 0.0, maxf(duration_sec, 0.01))
 	await tween.finished
 	_overlay.visible = false
 	_is_fading = false
+	_awaiting_reveal = false
 
 
 func fade_in_tween(duration_sec: float) -> Tween:
@@ -121,12 +121,12 @@ func wait_until_idle() -> void:
 
 
 func _on_scene_changed() -> void:
-	_is_fading = false
 	_build_overlay()
 	if _awaiting_reveal:
-		_overlay.visible = true
-		_overlay.modulate.a = 1.0
-	else:
+		if !_is_fading:
+			_overlay.visible = true
+			_overlay.modulate.a = 1.0
+	elif !_is_fading:
 		_hide_overlay()
 
 

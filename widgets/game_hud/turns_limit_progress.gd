@@ -1,19 +1,18 @@
-extends TextureProgressBar
+extends ProgressBar
 
 const BAR_BG := preload("res://assets/Prinbles_Asset_Robin (v 1.1) (9_5_2023)/png/Bar/Background.png")
 const BAR_FILL := preload("res://assets/Prinbles_Asset_Robin (v 1.1) (9_5_2023)/png/Bar/Line.png")
 
 
 func _ready() -> void:
-	texture_under = BAR_BG
-	texture_progress = BAR_FILL
-	texture_filter = 0
+	show_percentage = false
+	fill_mode = 0
+	custom_minimum_size = Vector2(0.0, 48.0)
+	size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	add_theme_stylebox_override("background", _make_bar_style(BAR_BG))
+	add_theme_stylebox_override("fill", _make_bar_style(BAR_FILL))
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_apply_orientation(GameSettings.turns_progress_orientation)
-
-
-func apply_orientation(orientation: String) -> void:
-	_apply_orientation(orientation)
 
 
 func sync_from_session(session: Node) -> void:
@@ -23,12 +22,11 @@ func sync_from_session(session: Node) -> void:
 	value = clampf(float(session.turns), 0.0, max_value)
 
 
-func _apply_orientation(orientation: String) -> void:
-	if orientation == "vertical":
-		fill_mode = TextureProgressBar.FILL_BOTTOM_TO_TOP
-		rotation_degrees = 0.0
-		custom_minimum_size = Vector2(52, 280)
-	else:
-		fill_mode = TextureProgressBar.FILL_LEFT_TO_RIGHT
-		rotation_degrees = 0.0
-		custom_minimum_size = Vector2(320, 52)
+func _make_bar_style(texture: Texture2D) -> StyleBoxTexture:
+	var style := StyleBoxTexture.new()
+	style.texture = texture
+	style.texture_margin_left = 16.0
+	style.texture_margin_top = 12.0
+	style.texture_margin_right = 16.0
+	style.texture_margin_bottom = 12.0
+	return style

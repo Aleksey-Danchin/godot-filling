@@ -10,6 +10,7 @@ const SLIDE_TRANSITION_SCRIPT := preload("res://widgets/menu_navigation/menu_sli
 @onready var _content_host: Control = $ContentHost
 @onready var _menu_slot: Control = $ContentHost/MenuSlideSlot
 @onready var _menu_panel: Control = $ContentHost/MenuSlideSlot/MenuPanel
+@onready var _version_label: Label = $ContentHost/MenuSlideSlot/MenuPanel/VBox/VersionLabel
 
 var _slide_transition: Node = null
 var _overlay_slot: Control = null
@@ -26,6 +27,10 @@ func _ready() -> void:
 	_content_host.clip_contents = true
 	_content_host.resized.connect(_on_content_host_resized)
 	_on_content_host_resized()
+	_version_label.text = "v%s" % str(ProjectSettings.get_setting("application/config/version", "0.1.0"))
+	if ScreenFader.is_awaiting_reveal():
+		await get_tree().process_frame
+		await ScreenFader.fade_in(ScreenFader.FADE_REVEAL_SEC)
 
 
 func _on_content_host_resized() -> void:

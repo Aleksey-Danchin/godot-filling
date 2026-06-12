@@ -187,13 +187,13 @@ func _on_active_waves_changed(activity_count: int) -> void:
 
 
 func _on_session_state_changed() -> void:
-	hud_controller.apply_progress_orientation(GameSettings.turns_progress_orientation)
+	hud_controller.apply_layout()
 	hud_controller.sync_from_session(game_session_state)
 
 
 func show_game_over_ui() -> void:
 	game_over_ui.turns = game_session_state.turns
-	game_over_ui.show()
+	game_over_ui.present()
 
 
 func _on_game_over_ui_play_again() -> void:
@@ -219,7 +219,7 @@ func _setup_board_for_new_session() -> void:
 	board_presentation_state.reset_from_model(board_model, board_view)
 	board_model.refresh_available_move_values()
 	game_session_state.start_new_game(game_session_state.max_turns)
-	hud_controller.apply_progress_orientation(GameSettings.turns_progress_orientation)
+	hud_controller.apply_layout()
 	hud_controller.sync_from_session(game_session_state)
 
 
@@ -256,7 +256,7 @@ func _on_pause_restart_requested() -> void:
 	board_presentation_state.reset_from_model(board_model, board_view)
 	board_model.refresh_available_move_values()
 	game_session_state.start_new_game(game_session_state.max_turns)
-	hud_controller.apply_progress_orientation(GameSettings.turns_progress_orientation)
+	hud_controller.apply_layout()
 	hud_controller.sync_from_session(game_session_state)
 	board_field.position = _board_field_target_position
 

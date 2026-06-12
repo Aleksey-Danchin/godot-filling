@@ -16,7 +16,6 @@
 [ext_resource type="Script" uid="uid://bgyo48gw85j2f" path="res://widgets/game_transition/transition_player.gd" id="7_transition"]
 [ext_resource type="Script" uid="uid://bye3dkt11d2r5" path="res://widgets/game_hud/hud_controller.gd" id="8_hud"]
 [ext_resource type="Script" path="res://widgets/game_hud/turns_limit_progress.gd" id="8_progress"]
-[ext_resource type="Texture2D" path="res://assets/Prinbles_Asset_Robin (v 1.1) (9_5_2023)/png/Counter/Default.png" id="8_card"]
 [ext_resource type="Texture2D" uid="uid://b11es31gt1l5y" path="res://assets/Textures16x16ByAndrox/Textures16x16/8a.png" id="8_tex5"]
 [ext_resource type="Script" uid="uid://cki7cbh3x257l" path="res://widgets/cell_fx/cell_fx_layer_manager.gd" id="9_fx_layers"]
 [ext_resource type="Texture2D" uid="uid://dpgyjdrjwf3s5" path="res://assets/Textures16x16ByAndrox/Textures16x16/7a.png" id="9_tex6"]
@@ -25,12 +24,12 @@
 [ext_resource type="PackedScene" uid="uid://btimu00uohjir" path="res://uis/GameOverUI/game_over_ui.tscn" id="12_gameover"]
 [ext_resource type="PackedScene" path="res://uis/game_pause_menu/game_pause_menu.tscn" id="13_pause"]
 
-[sub_resource type="StyleBoxTexture" id="hud_card_style"]
-texture = ExtResource("8_card")
-texture_margin_left = 16.0
-texture_margin_top = 12.0
-texture_margin_right = 16.0
-texture_margin_bottom = 12.0
+[sub_resource type="StyleBoxFlat" id="hud_card_style"]
+bg_color = Color(0, 0, 0, 0.5)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 content_margin_left = 20.0
 content_margin_top = 14.0
 content_margin_right = 20.0
@@ -124,66 +123,55 @@ script = ExtResource("7_transition")
 
 [node name="HUDController" type="CanvasLayer" parent="." unique_id=418077382]
 script = ExtResource("8_hud")
-turns_label_path = NodePath("Root/HudCard/CardMargin/Labels/TurnsLabel")
-status_label_path = NodePath("Root/HudCard/CardMargin/Labels/StatusLabel")
-horizontal_progress_path = NodePath("Root/HorizontalTurnsProgress")
-vertical_progress_path = NodePath("Root/VerticalTurnsProgress")
+turns_label_path = NodePath("Root/TopMargin/TopVBox/HudCard/CardMargin/Labels/TurnsLabel")
+status_label_path = NodePath("Root/TopMargin/TopVBox/HudCard/CardMargin/Labels/StatusLabel")
+horizontal_progress_path = NodePath("Root/TopMargin/TopVBox/HorizontalTurnsProgress")
 
 [node name="Root" type="Control" parent="HUDController" unique_id=1185172478]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 mouse_filter = 2
 
-[node name="HudCard" type="PanelContainer" parent="HUDController/Root"]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 620.0
-offset_bottom = 132.0
+[node name="TopMargin" type="MarginContainer" parent="HUDController/Root"]
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="TopVBox" type="VBoxContainer" parent="HUDController/Root/TopMargin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="HorizontalTurnsProgress" type="ProgressBar" parent="HUDController/Root/TopMargin/TopVBox"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+script = ExtResource("8_progress")
+
+[node name="HudCard" type="PanelContainer" parent="HUDController/Root/TopMargin/TopVBox"]
+layout_mode = 2
+size_flags_horizontal = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("hud_card_style")
 
-[node name="CardMargin" type="MarginContainer" parent="HUDController/Root/HudCard"]
+[node name="CardMargin" type="MarginContainer" parent="HUDController/Root/TopMargin/TopVBox/HudCard"]
 layout_mode = 2
 
-[node name="Labels" type="VBoxContainer" parent="HUDController/Root/HudCard/CardMargin"]
+[node name="Labels" type="VBoxContainer" parent="HUDController/Root/TopMargin/TopVBox/HudCard/CardMargin"]
 layout_mode = 2
 theme_override_constants/separation = 6
 
-[node name="TurnsLabel" type="Label" parent="HUDController/Root/HudCard/CardMargin/Labels" unique_id=906265894]
+[node name="TurnsLabel" type="Label" parent="HUDController/Root/TopMargin/TopVBox/HudCard/CardMargin/Labels" unique_id=906265894]
 layout_mode = 2
 mouse_filter = 2
 theme_override_font_sizes/font_size = 30
 text = "Ходов: 0/0"
 
-[node name="StatusLabel" type="Label" parent="HUDController/Root/HudCard/CardMargin/Labels" unique_id=674848564]
+[node name="StatusLabel" type="Label" parent="HUDController/Root/TopMargin/TopVBox/HudCard/CardMargin/Labels" unique_id=674848564]
 layout_mode = 2
 mouse_filter = 2
 theme_override_font_sizes/font_size = 24
 text = "Игра идет"
-
-[node name="HorizontalTurnsProgress" type="TextureProgressBar" parent="HUDController/Root"]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 148.0
-offset_right = 340.0
-offset_bottom = 200.0
-mouse_filter = 2
-script = ExtResource("8_progress")
-
-[node name="VerticalTurnsProgress" type="TextureProgressBar" parent="HUDController/Root"]
-visible = false
-layout_mode = 0
-offset_left = 980.0
-offset_top = 120.0
-offset_right = 1032.0
-offset_bottom = 400.0
-mouse_filter = 2
-script = ExtResource("8_progress")
 
 [node name="GameOverUI" parent="." unique_id=109294449 instance=ExtResource("12_gameover")]
 visible = false

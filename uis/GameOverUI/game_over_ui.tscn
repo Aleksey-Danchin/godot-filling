@@ -2,13 +2,10 @@
 
 [ext_resource type="Script" uid="uid://dxvp0hea6kfw6" path="res://uis/GameOverUI/game_over_ui.gd" id="1_5x2cg"]
 [ext_resource type="Shader" uid="uid://dnegk32g4v3qg" path="res://uis/GameOverUI/game_over_ui.gdshader" id="1_rv77h"]
+[ext_resource type="Theme" path="res://uis/themes/robin_menu_theme.tres" id="2_robin"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5x2cg"]
 shader = ExtResource("1_rv77h")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_le7ul"]
-content_margin_top = 10.0
-content_margin_bottom = 10.0
 
 [node name="GameOverUI" type="CanvasLayer" unique_id=1279441552]
 script = ExtResource("1_5x2cg")
@@ -77,21 +74,24 @@ layout_mode = 2
 theme_override_constants/separation = 30
 
 [node name="Button1" type="Button" parent="Control/MarginContainer/VBoxContainer/VBoxContainer" unique_id=405870234]
+custom_minimum_size = Vector2(0, 88)
 layout_mode = 2
-theme_override_font_sizes/font_size = 47
-theme_override_styles/normal = SubResource("StyleBoxFlat_le7ul")
+theme = ExtResource("2_robin")
+theme_override_font_sizes/font_size = 40
 text = "Показать поле"
 
 [node name="Button2" type="Button" parent="Control/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1198750271]
+custom_minimum_size = Vector2(0, 88)
 layout_mode = 2
-theme_override_font_sizes/font_size = 47
-theme_override_styles/normal = SubResource("StyleBoxFlat_le7ul")
+theme = ExtResource("2_robin")
+theme_override_font_sizes/font_size = 40
 text = "Играть еще раз"
 
 [node name="Button3" type="Button" parent="Control/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1846869985]
+custom_minimum_size = Vector2(0, 88)
 layout_mode = 2
-theme_override_font_sizes/font_size = 47
-theme_override_styles/normal = SubResource("StyleBoxFlat_le7ul")
+theme = ExtResource("2_robin")
+theme_override_font_sizes/font_size = 40
 text = "Вернуться в меню"
 
 [node name="Control2" type="Control" parent="Control/MarginContainer/VBoxContainer" unique_id=107595575]

@@ -3,17 +3,16 @@
 [ext_resource type="Script" path="res://uis/game_pause_menu/game_pause_menu.gd" id="1_pause"]
 [ext_resource type="Shader" uid="uid://dnegk32g4v3qg" path="res://uis/GameOverUI/game_over_ui.gdshader" id="2_blur"]
 [ext_resource type="Theme" path="res://uis/themes/robin_menu_theme.tres" id="3_robin"]
-[ext_resource type="Texture2D" path="res://assets/Prinbles_Asset_Robin (v 1.1) (9_5_2023)/png/Counter/Default.png" id="4_card"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_blur"]
 shader = ExtResource("2_blur")
 
-[sub_resource type="StyleBoxTexture" id="card_style"]
-texture = ExtResource("4_card")
-texture_margin_left = 20.0
-texture_margin_top = 16.0
-texture_margin_right = 20.0
-texture_margin_bottom = 16.0
+[sub_resource type="StyleBoxFlat" id="card_style"]
+bg_color = Color(0, 0, 0, 0.5)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 content_margin_left = 32.0
 content_margin_top = 28.0
 content_margin_right = 32.0
