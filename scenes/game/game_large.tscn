@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://b11es31gt1l5y" path="res://assets/Textures16x16ByAndrox/Textures16x16/8a.png" id="8_tex5"]
 [ext_resource type="Texture2D" uid="uid://dpgyjdrjwf3s5" path="res://assets/Textures16x16ByAndrox/Textures16x16/7a.png" id="9_tex6"]
 [ext_resource type="Script" path="res://widgets/cell_fx/cell_fx_layer_manager.gd" id="9_fx_layers"]
+[ext_resource type="Script" path="res://widgets/cell_flag/cell_flag_overlay.gd" id="14_flags"]
 [ext_resource type="Texture2D" uid="uid://bdmewo4n1j4kg" path="res://assets/Textures16x16ByAndrox/Textures16x16/5g.png" id="10_tex7"]
 [ext_resource type="Texture2D" uid="uid://846pfyawikcw" path="res://assets/Textures16x16ByAndrox/Textures16x16/2e.png" id="11_tex8"]
 [ext_resource type="PackedScene" uid="uid://btimu00uohjir" path="res://uis/GameOverUI/game_over_ui.tscn" id="12_gameover"]
@@ -107,6 +108,9 @@ script = ExtResource("4_view")
 
 [node name="CellFxLayerManager" type="Node2D" parent="BoardField/BoardView"]
 script = ExtResource("9_fx_layers")
+
+[node name="CellFlagOverlay" type="Node2D" parent="BoardField"]
+script = ExtResource("14_flags")
 
 [node name="BoardCamera" type="Camera2D" parent="."]
 position = Vector2(540, 700)

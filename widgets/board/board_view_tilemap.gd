@@ -101,6 +101,15 @@ func map_coord_to_local_center(coord: Vector2i) -> Vector2:
 	return map_to_local(coord)
 
 
+func map_coord_to_pivot(coord: Vector2i, pivot: Vector2 = Vector2(0.5, 0.75)) -> Vector2:
+	var tile_size: Vector2 = Vector2(tile_set.tile_size) if tile_set != null else Vector2(16.0, 16.0)
+	var center: Vector2 = map_to_local(coord)
+	return center + Vector2(
+		tile_size.x * (pivot.x - 0.5),
+		tile_size.y * (pivot.y - 0.5)
+	)
+
+
 func get_texture_for_value(value: int) -> Texture2D:
 	if tile_set == null or !color_to_source_id.has(value):
 		return null

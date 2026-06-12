@@ -15,6 +15,7 @@ const INTRO_SLIDE_SEC := 0.85
 @onready var game_session_state: Node = $GameSessionState
 @onready var board_view: TileMapLayer = $BoardField/BoardView
 @onready var cell_fx_layer_manager: Node2D = $BoardField/BoardView/CellFxLayerManager
+@onready var cell_flag_overlay: Node2D = $BoardField/CellFlagOverlay
 @onready var board_camera_controller: Node = $BoardCameraController
 @onready var input_controller: Node = $InputController
 @onready var move_validator: Node = $MoveValidator
@@ -38,6 +39,7 @@ func _ready() -> void:
 		board_view.cell_clicked.connect(_on_cell_selected)
 	transition_player.active_waves_changed.connect(_on_active_waves_changed)
 	transition_player.wave_playback_finished.connect(_on_wave_playback_finished)
+	transition_player.cell_wave_started.connect(_on_cell_wave_started)
 	game_session_state.state_changed.connect(_on_session_state_changed)
 	var pause_menu := get_node("GamePauseMenu")
 	if pause_menu.has_signal("restart_requested"):
@@ -163,6 +165,8 @@ func _process_move(selected_color: int) -> void:
 		return
 
 	game_session_state.register_move(move_result)
+	if cell_flag_overlay.has_method("tick_after_move"):
+		cell_flag_overlay.tick_after_move()
 	transition_player.play_wave(
 		move_result,
 		board_view,
@@ -180,6 +184,11 @@ func _on_wave_playback_finished(move_result: Dictionary, move_generation: int) -
 		phase = Phase.GAME_OVER
 		game_session_state.finish_game()
 		show_game_over_ui()
+
+
+func _on_cell_wave_started(coord: Vector2i) -> void:
+	if cell_flag_overlay.has_method("on_cell_wave_started"):
+		cell_flag_overlay.on_cell_wave_started(coord)
 
 
 func _on_active_waves_changed(activity_count: int) -> void:
@@ -215,6 +224,8 @@ func _setup_board_for_new_session() -> void:
 	board_field_setup.apply(board_model, board_view)
 	if cell_fx_layer_manager.has_method("configure_for_board"):
 		cell_fx_layer_manager.configure_for_board(board_model)
+	if cell_flag_overlay.has_method("prepare_for_session"):
+		cell_flag_overlay.prepare_for_session(board_view, board_field, board_model)
 	_store_initial_board_snapshot()
 	board_presentation_state.reset_from_model(board_model, board_view)
 	board_model.refresh_available_move_values()
@@ -253,6 +264,8 @@ func _on_pause_restart_requested() -> void:
 
 	if cell_fx_layer_manager.has_method("configure_for_board"):
 		cell_fx_layer_manager.configure_for_board(board_model)
+	if cell_flag_overlay.has_method("prepare_for_session"):
+		cell_flag_overlay.prepare_for_session(board_view, board_field, board_model)
 	board_presentation_state.reset_from_model(board_model, board_view)
 	board_model.refresh_available_move_values()
 	game_session_state.start_new_game(game_session_state.max_turns)

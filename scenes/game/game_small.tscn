@@ -23,6 +23,8 @@
 [ext_resource type="Texture2D" uid="uid://846pfyawikcw" path="res://assets/Textures16x16ByAndrox/Textures16x16/2e.png" id="11_tex8"]
 [ext_resource type="PackedScene" uid="uid://btimu00uohjir" path="res://uis/GameOverUI/game_over_ui.tscn" id="12_gameover"]
 [ext_resource type="PackedScene" path="res://uis/game_pause_menu/game_pause_menu.tscn" id="13_pause"]
+[ext_resource type="Script" uid="uid://c3adls6f57fqf" path="res://widgets/cell_flag/cell_flag_overlay.gd" id="14_flags"]
+[ext_resource type="PackedScene" path="res://widgets/cell_flag/cell_flag_banner.tscn" id="15_flag_banner"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hkgtx"]
 texture = ExtResource("4_tex1")
@@ -97,12 +99,42 @@ position = Vector2(78, 236.99998)
 scale = Vector2(9.83, 9.83)
 
 [node name="BoardView" type="TileMapLayer" parent="BoardField" unique_id=2053119711]
-tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAQAAAAAAAAADAAAABwAAAAAAAAAEAAAAAgAAAAAAAAAFAAAAAwAAAAAAAAAAAAEABgAAAAAAAAABAAEABwAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAAFAAEAAQAAAAAAAAAAAAIAAgAAAAAAAAABAAIAAgAAAAAAAAACAAIABgAAAAAAAAADAAIAAwAAAAAAAAAEAAIABQAAAAAAAAAFAAIAAAAAAAAAAAAAAAMABAAAAAAAAAABAAMAAgAAAAAAAAACAAMABQAAAAAAAAADAAMABQAAAAAAAAAEAAMAAgAAAAAAAAAFAAMAAAAAAAAAAAAAAAQABwAAAAAAAAABAAQAAwAAAAAAAAACAAQAAQAAAAAAAAADAAQAAAAAAAAAAAAEAAQABQAAAAAAAAAFAAQAAgAAAAAAAAAAAAUAAAAAAAAAAAABAAUAAQAAAAAAAAACAAUABAAAAAAAAAADAAUAAAAAAAAAAAAEAAUAAwAAAAAAAAAFAAUABwAAAAAAAAAAAAYAAAAAAAAAAAABAAYAAQAAAAAAAAACAAYAAgAAAAAAAAADAAYAAQAAAAAAAAAEAAYABQAAAAAAAAAFAAYABQAAAAAAAAAAAAcAAgAAAAAAAAABAAcABAAAAAAAAAACAAcABAAAAAAAAAADAAcABQAAAAAAAAAEAAcAAgAAAAAAAAAFAAcAAwAAAAAAAAAAAAgABAAAAAAAAAABAAgAAAAAAAAAAAACAAgAAgAAAAAAAAADAAgABgAAAAAAAAAEAAgABQAAAAAAAAAFAAgAAgAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAAAAAAAgAAAAAAAAABAAAABAAAAAAAAAACAAAABQAAAAAAAAADAAAABgAAAAAAAAAEAAAAAAAAAAAAAAAFAAAABQAAAAAAAAAAAAEABQAAAAAAAAABAAEAAAAAAAAAAAACAAEAAQAAAAAAAAADAAEABwAAAAAAAAAEAAEAAQAAAAAAAAAFAAEAAgAAAAAAAAAAAAIAAQAAAAAAAAABAAIAAwAAAAAAAAACAAIAAwAAAAAAAAADAAIAAQAAAAAAAAAEAAIABAAAAAAAAAAFAAIAAQAAAAAAAAAAAAMABAAAAAAAAAABAAMABwAAAAAAAAACAAMAAgAAAAAAAAADAAMABAAAAAAAAAAEAAMAAAAAAAAAAAAFAAMABgAAAAAAAAAAAAQAAQAAAAAAAAABAAQABQAAAAAAAAACAAQAAgAAAAAAAAADAAQABAAAAAAAAAAEAAQAAQAAAAAAAAAFAAQABAAAAAAAAAAAAAUAAQAAAAAAAAABAAUABwAAAAAAAAACAAUABwAAAAAAAAADAAUABwAAAAAAAAAEAAUABQAAAAAAAAAFAAUABQAAAAAAAAAAAAYAAAAAAAAAAAABAAYAAwAAAAAAAAACAAYABwAAAAAAAAADAAYAAAAAAAAAAAAEAAYABwAAAAAAAAAFAAYABQAAAAAAAAAAAAcAAAAAAAAAAAABAAcAAAAAAAAAAAACAAcABwAAAAAAAAADAAcAAAAAAAAAAAAEAAcABwAAAAAAAAAFAAcABwAAAAAAAAAAAAgAAAAAAAAAAAABAAgABgAAAAAAAAACAAgABgAAAAAAAAADAAgAAgAAAAAAAAAEAAgABAAAAAAAAAAFAAgAAgAAAAAAAAA=")
 tile_set = SubResource("TileSet_lmrul")
 script = ExtResource("4_view")
 
 [node name="CellFxLayerManager" type="Node2D" parent="BoardField/BoardView" unique_id=2003165126]
 script = ExtResource("9_fx_layers")
+
+[node name="CellFlagOverlay" type="Node2D" parent="BoardField" unique_id=1804065077]
+script = ExtResource("14_flags")
+
+[node name="FlagTopLeft" parent="BoardField/CellFlagOverlay" unique_id=1912796285 instance=ExtResource("15_flag_banner")]
+position = Vector2(24, 34.4)
+scale = Vector2(0.15, 0.15)
+cell_coord = Vector2i(1, 2)
+initial_counter = 5
+
+[node name="FlagTopMid" parent="BoardField/CellFlagOverlay" unique_id=1728332892 instance=ExtResource("15_flag_banner")]
+position = Vector2(56, 18.4)
+scale = Vector2(0.15, 0.15)
+cell_coord = Vector2i(3, 1)
+banner_color = 1
+initial_counter = 4
+
+[node name="FlagCenter" parent="BoardField/CellFlagOverlay" unique_id=1858366357 instance=ExtResource("15_flag_banner")]
+position = Vector2(72, 66.4)
+scale = Vector2(0.15, 0.15)
+cell_coord = Vector2i(4, 4)
+banner_color = 2
+initial_counter = 5
+
+[node name="FlagBottom" parent="BoardField/CellFlagOverlay" unique_id=544718578 instance=ExtResource("15_flag_banner")]
+position = Vector2(40, 98.4)
+scale = Vector2(0.15, 0.15)
+cell_coord = Vector2i(2, 6)
+use_random_color = true
+initial_counter = 2
 
 [node name="BoardCamera" type="Camera2D" parent="." unique_id=781667489]
 position = Vector2(540, 700)
@@ -126,16 +158,19 @@ status_label_path = NodePath("Root/TopMargin/TopVBox/HudCard/CardMargin/Labels/S
 horizontal_progress_path = NodePath("Root/TopMargin/TopVBox/HorizontalTurnsProgress")
 
 [node name="Root" type="Control" parent="HUDController" unique_id=871495665]
+layout_mode = 3
+anchors_preset = 0
 mouse_filter = 2
 
-[node name="TopMargin" type="MarginContainer" parent="HUDController/Root"]
+[node name="TopMargin" type="MarginContainer" parent="HUDController/Root" unique_id=47170532]
+layout_mode = 0
 mouse_filter = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="TopVBox" type="VBoxContainer" parent="HUDController/Root/TopMargin"]
+[node name="TopVBox" type="VBoxContainer" parent="HUDController/Root/TopMargin" unique_id=488297300]
 layout_mode = 2
 theme_override_constants/separation = 12
 
@@ -161,13 +196,11 @@ theme_override_constants/separation = 6
 
 [node name="TurnsLabel" type="Label" parent="HUDController/Root/TopMargin/TopVBox/HudCard/CardMargin/Labels" unique_id=462556796]
 layout_mode = 2
-mouse_filter = 2
 theme_override_font_sizes/font_size = 30
 text = "Ходов: 0/0"
 
 [node name="StatusLabel" type="Label" parent="HUDController/Root/TopMargin/TopVBox/HudCard/CardMargin/Labels" unique_id=1198762200]
 layout_mode = 2
-mouse_filter = 2
 theme_override_font_sizes/font_size = 24
 text = "Игра идет"
 

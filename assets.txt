@@ -37,3 +37,18 @@ You can use the asset in your commercial game, which can earning any income in a
 This asset may not be resold by you.
 Credit is not required but we are not against.
 https://prinbles.itch.io/robin
+
+Hi!
+This is a small banner asset. The .zip file contains both the individual frames in png format and the gifs, all with a resolution of 128x128 pixels.
+You can use this asset for whatever you like.
+In this asset:
+4 faction banners:
+Lion's Kingdom
+Dragon Slayer
+Sand Watchers
+Shiny Heretics
+Simple green, blue, yellow, red banners
+2 different animations for all banners
+2 variants: Wall / Floor
+Credit is not necessary, but if you create something using this asset I'd be happy to see your work :)
+https://jbs-pixelstorm.itch.io/banners

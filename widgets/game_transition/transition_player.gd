@@ -7,6 +7,7 @@ const _NEG_INF := -1.0e20
 
 signal active_waves_changed(active_count: int)
 signal wave_playback_finished(move_result: Dictionary, move_generation: int)
+signal cell_wave_started(coord: Vector2i)
 
 @export_range(0.0, 1.0, 0.01) var wave_delay_sec: float = 0.12
 @export_range(0.0, 1.0, 0.01) var shake_light_sec: float = 0.15
@@ -119,6 +120,7 @@ func _start_wave(wave_id: int, fx_layer: Node, entry: Dictionary) -> void:
 		var changed_cells: Array[Vector2i] = move_result.get("changed_cells", [])
 		for coord_variant in changed_cells:
 			var coord: Vector2i = coord_variant
+			cell_wave_started.emit(coord)
 			if presentation_state != null and presentation_state.has_method("request_cell_commit"):
 				presentation_state.request_cell_commit(wave_id, coord, new_value, board_view)
 			else:
@@ -310,6 +312,8 @@ func _job_due_at(job: Dictionary) -> float:
 
 
 func _launch_job(job: Dictionary, now_sec: float) -> void:
+	cell_wave_started.emit(job["coord"] as Vector2i)
+
 	var wave_id: int = job["wave_id"]
 	if _wave_state.has(wave_id):
 		var state: Dictionary = _wave_state[wave_id]
