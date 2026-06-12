@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://uis/menu_submenu/menu_submenu_panel.gd" id="1_submenu"]
+[ext_resource type="Theme" path="res://uis/themes/robin_menu_theme.tres" id="2_theme"]
+
+[node name="MenuSubmenuPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_submenu")
+
+[node name="MenuPanel" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 48
+
+[node name="VBox" type="VBoxContainer" parent="MenuPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Title" type="Label" parent="MenuPanel/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 56
+text = "Раздел"
+horizontal_alignment = 1
+
+[node name="MenuButtons" type="CenterContainer" parent="MenuPanel/VBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ButtonsVBox" type="VBoxContainer" parent="MenuPanel/VBox/MenuButtons"]
+layout_mode = 2
+theme = ExtResource("2_theme")
+theme_override_constants/separation = 32

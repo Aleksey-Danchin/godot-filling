@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://widgets/tutorial/tutorial_cell_tap_hint.gd" id="1_hint"]
+
+[node name="TutorialCellTapHint" type="Node2D"]
+script = ExtResource("1_hint")
+
+[node name="OutlineSprite" type="AnimatedSprite2D" parent="."]
+z_index = -1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

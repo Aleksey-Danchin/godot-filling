@@ -77,23 +77,23 @@ layout_mode = 2
 theme = ExtResource("3_menu_theme")
 theme_override_constants/separation = 32
 
-[node name="SmallButton" type="Button" parent="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox" unique_id=1775426230]
+[node name="TutorialButton" type="Button" parent="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox"]
 custom_minimum_size = Vector2(600, 144)
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Малое поле"
+text = "Обучение"
 
-[node name="LargeButton" type="Button" parent="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox" unique_id=1296726655]
+[node name="ScenarioButton" type="Button" parent="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox"]
 custom_minimum_size = Vector2(600, 144)
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Большое поле"
+text = "Сценарий"
 
-[node name="RandomButton" type="Button" parent="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox" unique_id=1682174354]
+[node name="ChallengeButton" type="Button" parent="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox"]
 custom_minimum_size = Vector2(600, 144)
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Случайное поле"
+text = "Вызов"
 
 [node name="Label" type="Label" parent="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox" unique_id=1372393330]
 layout_mode = 2
@@ -112,8 +112,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 text = "Об игре"
 
-[connection signal="pressed" from="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox/SmallButton" to="." method="_on_small_game_pressed"]
-[connection signal="pressed" from="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox/LargeButton" to="." method="_on_large_game_pressed"]
-[connection signal="pressed" from="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox/RandomButton" to="." method="_on_random_game_pressed"]
+[connection signal="pressed" from="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox/TutorialButton" to="." method="_on_tutorial_pressed"]
+[connection signal="pressed" from="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox/ScenarioButton" to="." method="_on_scenario_pressed"]
+[connection signal="pressed" from="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox/ChallengeButton" to="." method="_on_challenge_pressed"]
 [connection signal="pressed" from="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox/SettingsButton" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="ContentHost/MenuSlideSlot/MenuPanel/VBox/MenuButtons/ButtonsVBox/AboutButton" to="." method="_on_about_pressed"]

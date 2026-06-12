@@ -11,6 +11,17 @@ func slide_back(host: Control, outgoing_slot: Control, incoming_slot: Control) -
 	await _slide(host, outgoing_slot, incoming_slot, false)
 
 
+func snap_forward(host: Control, outgoing_slot: Control, incoming_slot: Control) -> void:
+	var panel_size: Vector2 = _panel_size(host)
+	_layout_slot(outgoing_slot, panel_size)
+	_layout_slot(incoming_slot, panel_size)
+	incoming_slot.position = Vector2.ZERO
+	incoming_slot.show()
+	outgoing_slot.hide()
+	outgoing_slot.position = Vector2.ZERO
+	host.move_child(incoming_slot, -1)
+
+
 func create_overlay_slot(panel: Control, host: Control) -> Control:
 	var panel_size: Vector2 = _panel_size(host)
 	var slot: Control = Control.new()

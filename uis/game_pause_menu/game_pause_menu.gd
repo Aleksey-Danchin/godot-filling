@@ -2,6 +2,7 @@ extends CanvasLayer
 
 signal restart_requested
 signal main_menu_requested
+signal overlay_visibility_changed(is_open: bool)
 
 const OPEN_DUR := 0.38
 const SLIDE_PX := 88.0
@@ -84,6 +85,7 @@ func open_menu() -> void:
 	tween.tween_property(center_panel, "offset_bottom", _panel_rest_bottom, OPEN_DUR)
 	await tween.finished
 	_is_animating = false
+	overlay_visibility_changed.emit(true)
 
 
 func _animate_close() -> void:
@@ -103,6 +105,7 @@ func _animate_close() -> void:
 	center_panel.offset_top = _panel_rest_top
 	center_panel.offset_bottom = _panel_rest_bottom
 	_is_animating = false
+	overlay_visibility_changed.emit(false)
 
 
 func _on_backdrop_gui_input(event: InputEvent) -> void:

@@ -1,0 +1,73 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://widgets/tutorial/tutorial_prompt.gd" id="1_prompt"]
+
+[sub_resource type="StyleBoxFlat" id="panel_style"]
+content_margin_left = 24.0
+content_margin_top = 20.0
+content_margin_right = 24.0
+content_margin_bottom = 20.0
+bg_color = Color(0, 0, 0, 0.72)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="TutorialPrompt" type="CanvasLayer"]
+script = ExtResource("1_prompt")
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BottomAnchor" type="MarginContainer" parent="Root"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -360.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 100
+
+[node name="Panel" type="PanelContainer" parent="Root/BottomAnchor"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("panel_style")
+
+[node name="Margin" type="MarginContainer" parent="Root/BottomAnchor/Panel"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="Root/BottomAnchor/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+mouse_filter = 2
+
+[node name="HintHost" type="Control" parent="Root/BottomAnchor/Panel/Margin/VBox"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+
+[node name="HintSprite" type="AnimatedSprite2D" parent="Root/BottomAnchor/Panel/Margin/VBox/HintHost"]
+position = Vector2(100, 100)
+scale = Vector2(1, 1)
+
+[node name="MessageLabel" type="Label" parent="Root/BottomAnchor/Panel/Margin/VBox"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/font_size = 56
+text = "Подсказка"
+horizontal_alignment = 1
+autowrap_mode = 3

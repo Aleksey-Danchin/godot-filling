@@ -2,7 +2,10 @@
 
 [ext_resource type="Script" uid="uid://2guv7ipwewpo" path="res://widgets/game_input/board_camera_controller.gd" id="1_camera_ctrl"]
 [ext_resource type="Script" uid="uid://btekei1wbeysm" path="res://scenes/game/game.gd" id="1_game"]
-[ext_resource type="Script" uid="uid://cwwxlmo6066on" path="res://widgets/board/board_field_setup.gd" id="1_setup"]
+[ext_resource type="Script" path="res://widgets/tutorial/tutorial_field_setup.gd" id="1_setup"]
+[ext_resource type="PackedScene" path="res://widgets/tutorial/tutorial_prompt.tscn" id="17_prompt"]
+[ext_resource type="PackedScene" path="res://widgets/tutorial/tutorial_cell_tap_hint.tscn" id="17b_cell_hint"]
+[ext_resource type="Script" path="res://widgets/tutorial/tutorial_controller.gd" id="18_tutorial"]
 [ext_resource type="Script" uid="uid://dkl7mu5hq2r1f" path="res://widgets/board/board_model.gd" id="2_model"]
 [ext_resource type="Script" uid="uid://duikxfo15s3cc" path="res://widgets/board/board_presentation_state.gd" id="2_presentation"]
 [ext_resource type="Script" uid="uid://bfuyst6sp51bu" path="res://widgets/game_session/game_session_state.gd" id="3_session"]
@@ -80,14 +83,19 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[node name="Game" type="Node2D" unique_id=642700113]
+[node name="TutorialTap" type="Node2D"]
 script = ExtResource("1_game")
 
-[node name="BoardFieldSetup" type="Node" parent="." unique_id=1643362453]
+[node name="BoardFieldSetup" type="Node" parent="."]
 script = ExtResource("1_setup")
+pattern = 0
 
-[node name="BoardModel" type="Node" parent="." unique_id=615494282]
+[node name="BoardModel" type="Node" parent="."]
 script = ExtResource("2_model")
+rows = 1
+columns = 2
+color_count = 2
+start_coord = Vector2i(0, 0)
 
 [node name="BoardPresentationState" type="Node" parent="." unique_id=573324109]
 script = ExtResource("2_presentation")
@@ -95,48 +103,32 @@ script = ExtResource("2_presentation")
 [node name="GameSessionState" type="Node" parent="." unique_id=1173101328]
 script = ExtResource("3_session")
 
-[node name="LevelRules" type="Node" parent="." unique_id=270004398]
+[node name="LevelRules" type="Node" parent="."]
 script = ExtResource("16_level_rules")
+enable_flags = false
+enable_turn_limit = false
+show_turn_toolbar = false
+enable_pan = false
+enable_zoom = false
 
 [node name="BoardField" type="Node2D" parent="." unique_id=1104720200]
 position = Vector2(78, 236.99998)
 scale = Vector2(9.83, 9.83)
 
 [node name="BoardView" type="TileMapLayer" parent="BoardField" unique_id=2053119711]
-tile_map_data = PackedByteArray("AAAAAAAAAwAAAAAAAAABAAAABwAAAAAAAAACAAAABwAAAAAAAAADAAAABQAAAAAAAAAEAAAABgAAAAAAAAAFAAAABQAAAAAAAAAAAAEAAgAAAAAAAAABAAEABwAAAAAAAAACAAEAAQAAAAAAAAADAAEAAAAAAAAAAAAEAAEABAAAAAAAAAAFAAEAAgAAAAAAAAAAAAIAAQAAAAAAAAABAAIAAAAAAAAAAAACAAIABwAAAAAAAAADAAIAAQAAAAAAAAAEAAIAAgAAAAAAAAAFAAIAAQAAAAAAAAAAAAMAAQAAAAAAAAABAAMABAAAAAAAAAACAAMAAQAAAAAAAAADAAMAAAAAAAAAAAAEAAMAAwAAAAAAAAAFAAMAAAAAAAAAAAAAAAQABgAAAAAAAAABAAQABwAAAAAAAAACAAQABAAAAAAAAAADAAQABwAAAAAAAAAEAAQABwAAAAAAAAAFAAQAAAAAAAAAAAAAAAUAAwAAAAAAAAABAAUAAgAAAAAAAAACAAUABwAAAAAAAAADAAUAAAAAAAAAAAAEAAUABgAAAAAAAAAFAAUAAwAAAAAAAAAAAAYABQAAAAAAAAABAAYABQAAAAAAAAACAAYAAgAAAAAAAAADAAYABgAAAAAAAAAEAAYAAgAAAAAAAAAFAAYAAQAAAAAAAAAAAAcAAgAAAAAAAAABAAcABAAAAAAAAAACAAcABwAAAAAAAAADAAcABAAAAAAAAAAEAAcAAgAAAAAAAAAFAAcABQAAAAAAAAAAAAgABgAAAAAAAAABAAgABwAAAAAAAAACAAgABgAAAAAAAAADAAgABwAAAAAAAAAEAAgAAQAAAAAAAAAFAAgABgAAAAAAAAA=")
+tile_map_data = PackedByteArray("")
 tile_set = SubResource("TileSet_lmrul")
 script = ExtResource("4_view")
 
 [node name="CellFxLayerManager" type="Node2D" parent="BoardField/BoardView" unique_id=2003165126]
 script = ExtResource("9_fx_layers")
 
-[node name="CellFlagOverlay" type="Node2D" parent="BoardField" unique_id=1804065077]
+[node name="CellFlagOverlay" type="Node2D" parent="BoardField"]
 script = ExtResource("14_flags")
 
-[node name="FlagTopLeft" parent="BoardField/CellFlagOverlay" unique_id=1912796285 instance=ExtResource("15_flag_banner")]
-position = Vector2(24, 34.4)
-cell_coord = Vector2i(1, 2)
-initial_counter = 5
+[node name="TutorialCellTapHint" parent="BoardField" instance=ExtResource("17b_cell_hint")]
 
-[node name="FlagTopMid" parent="BoardField/CellFlagOverlay" unique_id=1728332892 instance=ExtResource("15_flag_banner")]
-position = Vector2(56, 18.4)
-cell_coord = Vector2i(3, 1)
-banner_color = 1
-initial_counter = 4
-
-[node name="FlagCenter" parent="BoardField/CellFlagOverlay" unique_id=1858366357 instance=ExtResource("15_flag_banner")]
-position = Vector2(72, 66.4)
-cell_coord = Vector2i(4, 4)
-banner_color = 2
-initial_counter = 5
-
-[node name="FlagBottom" parent="BoardField/CellFlagOverlay" unique_id=544718578 instance=ExtResource("15_flag_banner")]
-position = Vector2(40, 98.4)
-cell_coord = Vector2i(2, 6)
-use_random_color = true
-initial_counter = 2
-
-[node name="BoardCamera" type="Camera2D" parent="." unique_id=781667489]
+[node name="BoardCamera" type="Camera2D" parent="."]
 position = Vector2(540, 700)
 
 [node name="BoardCameraController" type="Node" parent="." unique_id=1773555158]
@@ -207,7 +199,13 @@ text = "Игра идет"
 [node name="GameOverUI" parent="." unique_id=1476677158 instance=ExtResource("12_gameover")]
 visible = false
 
-[node name="GamePauseMenu" parent="." unique_id=1312587529 instance=ExtResource("13_pause")]
+[node name="GamePauseMenu" parent="." instance=ExtResource("13_pause")]
+
+[node name="TutorialPrompt" parent="." instance=ExtResource("17_prompt")]
+
+[node name="TutorialController" type="Node" parent="."]
+script = ExtResource("18_tutorial")
+tutorial_kind = 0
 
 [connection signal="play_again" from="GameOverUI" to="." method="_on_game_over_ui_play_again"]
 [connection signal="show_map" from="GameOverUI" to="." method="_on_game_over_ui_show_map"]

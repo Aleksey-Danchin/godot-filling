@@ -8,6 +8,7 @@ var _overlay: ColorRect = null
 var _play_board_intro_after_fade: bool = false
 var _is_fading: bool = false
 var _awaiting_reveal: bool = false
+var _return_submenu_key: String = ""
 
 
 func _ready() -> void:
@@ -105,6 +106,16 @@ func consume_board_intro() -> bool:
 		return false
 	_play_board_intro_after_fade = false
 	return true
+
+
+func set_return_submenu(submenu_key: String) -> void:
+	_return_submenu_key = submenu_key
+
+
+func take_return_submenu() -> String:
+	var key: String = _return_submenu_key
+	_return_submenu_key = ""
+	return key
 
 
 func is_fading() -> bool:

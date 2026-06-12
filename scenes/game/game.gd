@@ -1,5 +1,11 @@
 extends Node2D
 
+signal move_registered(move_result: Dictionary)
+signal wave_started_on_cell(coord: Vector2i)
+signal game_won(move_result: Dictionary)
+signal game_lost()
+signal session_restart_requested()
+
 enum Phase { IDLE, GAME_OVER }
 
 const MAIN_SCENE_PATH := "res://scenes/main/main_scene.tscn"
@@ -24,6 +30,7 @@ const INTRO_SLIDE_SEC := 0.85
 @onready var hud_controller: CanvasLayer = $HUDController
 @onready var game_over_ui: CanvasLayer = $GameOverUI
 @onready var game_pause_menu: CanvasLayer = $GamePauseMenu
+@onready var tutorial_controller: Node = get_node_or_null("TutorialController")
 
 var phase: Phase = Phase.IDLE
 var _initial_board_cells: Dictionary = {}
@@ -47,13 +54,17 @@ func _ready() -> void:
 		pause_menu.restart_requested.connect(_on_pause_restart_requested)
 	if pause_menu.has_signal("main_menu_requested"):
 		pause_menu.main_menu_requested.connect(_on_pause_main_menu_requested)
+	if pause_menu.has_signal("overlay_visibility_changed"):
+		pause_menu.overlay_visibility_changed.connect(_on_pause_overlay_visibility_changed)
+	if !game_lost.is_connected(_on_game_lost):
+		game_lost.connect(_on_game_lost)
 
 	_setup_board_for_new_session()
 	await _finish_entry_sequence()
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if !_is_click_release(event) or game_pause_menu.is_menu_open():
+	if !_is_click_release(event) or _is_board_input_blocked_by_ui():
 		return
 	if board_camera_controller.has_method("is_suppressing_click") and board_camera_controller.is_suppressing_click():
 		return
@@ -142,8 +153,15 @@ func _play_board_intro() -> void:
 
 
 func _on_cell_selected(coord: Vector2i) -> void:
-	if game_pause_menu.is_menu_open():
+	if _is_board_input_blocked_by_ui():
 		return
+
+	if !_taps_enabled():
+		return
+
+	if tutorial_controller != null and tutorial_controller.has_method("filter_cell_tap"):
+		if !tutorial_controller.filter_cell_tap(coord):
+			return
 
 	if phase == Phase.GAME_OVER:
 		hud_controller.show_validation_reason(move_validator.GAME_OVER)
@@ -166,8 +184,11 @@ func _process_move(selected_color: int) -> void:
 		return
 
 	game_session_state.register_move(move_result)
-	if _flags_enabled() and cell_flag_overlay.has_method("tick_after_move"):
-		cell_flag_overlay.tick_after_move()
+	move_registered.emit(move_result)
+	if !move_result.get("solved", false) and !game_session_state.can_continue():
+		phase = Phase.GAME_OVER
+		game_session_state.finish_game()
+		game_lost.emit()
 	transition_player.play_wave(
 		move_result,
 		board_view,
@@ -181,13 +202,22 @@ func _on_wave_playback_finished(move_result: Dictionary, move_generation: int) -
 	if move_generation != _move_generation:
 		return
 
+	if _flags_enabled() and cell_flag_overlay.has_method("tick_after_move"):
+		cell_flag_overlay.tick_after_move()
+		if tutorial_controller != null and tutorial_controller.has_method("after_move_flags_updated"):
+			tutorial_controller.after_move_flags_updated()
+
 	if move_result.get("solved", false):
 		phase = Phase.GAME_OVER
 		game_session_state.finish_game()
-		show_game_over_ui()
+		game_won.emit(move_result)
+		if tutorial_controller == null or !tutorial_controller.has_method("should_suppress_win_ui") \
+				or !tutorial_controller.should_suppress_win_ui():
+			show_game_over_ui()
 
 
 func _on_cell_wave_started(coord: Vector2i) -> void:
+	wave_started_on_cell.emit(coord)
 	if _flags_enabled() and cell_flag_overlay.has_method("on_cell_wave_started"):
 		cell_flag_overlay.on_cell_wave_started(coord)
 
@@ -204,6 +234,18 @@ func _on_session_state_changed() -> void:
 func show_game_over_ui() -> void:
 	game_over_ui.turns = game_session_state.turns
 	game_over_ui.present()
+	_sync_board_camera_input()
+
+
+func _on_game_lost() -> void:
+	if tutorial_controller != null:
+		return
+	_open_pause_menu_on_defeat()
+
+
+func _open_pause_menu_on_defeat() -> void:
+	if game_pause_menu != null and game_pause_menu.has_method("open_menu"):
+		game_pause_menu.call_deferred("open_menu")
 
 
 func _on_game_over_ui_play_again() -> void:
@@ -215,6 +257,11 @@ func _on_game_over_ui_play_again() -> void:
 
 func _on_game_over_ui_show_map() -> void:
 	game_over_ui.hide()
+	_sync_board_camera_input()
+
+
+func _on_pause_overlay_visibility_changed(_is_open: bool) -> void:
+	_sync_board_camera_input()
 
 
 func _on_game_over_ui_switch_to_main() -> void:
@@ -250,6 +297,9 @@ func _restore_initial_board_snapshot() -> void:
 
 
 func _on_pause_restart_requested() -> void:
+	session_restart_requested.emit()
+	if tutorial_controller != null and tutorial_controller.has_method("handle_restart_request"):
+		tutorial_controller.handle_restart_request()
 	_move_generation += 1
 	transition_player.stop_all()
 	game_over_ui.hide()
@@ -275,6 +325,8 @@ func _on_pause_restart_requested() -> void:
 	hud_controller.apply_layout()
 	hud_controller.sync_from_session(game_session_state)
 	board_field.position = _board_field_target_position
+	if tutorial_controller != null and tutorial_controller.has_method("on_session_restarted"):
+		tutorial_controller.on_session_restarted()
 
 
 func _on_pause_main_menu_requested() -> void:
@@ -288,14 +340,46 @@ func _apply_level_rules() -> void:
 		game_session_state,
 		hud_controller,
 		cell_flag_overlay,
-		game_pause_menu
+		game_pause_menu,
+		board_camera_controller
 	)
+	_sync_board_camera_input()
+
+
+func _is_board_input_blocked_by_ui() -> bool:
+	if game_pause_menu != null and game_pause_menu.has_method("is_menu_open") \
+			and game_pause_menu.is_menu_open():
+		return true
+	if game_over_ui != null and game_over_ui.visible:
+		return true
+	return false
+
+
+func _sync_board_camera_input() -> void:
+	if board_camera_controller == null:
+		return
+	var rules_pan: bool = true
+	var rules_zoom: bool = true
+	if level_rules != null:
+		rules_pan = bool(level_rules.get("enable_pan"))
+		rules_zoom = bool(level_rules.get("enable_zoom"))
+	var blocked: bool = _is_board_input_blocked_by_ui()
+	if board_camera_controller.has_method("set_allow_pan"):
+		board_camera_controller.set_allow_pan(rules_pan and !blocked)
+	if board_camera_controller.has_method("set_allow_zoom"):
+		board_camera_controller.set_allow_zoom(rules_zoom and !blocked)
 
 
 func _flags_enabled() -> bool:
 	if level_rules == null:
 		return true
 	return bool(level_rules.get("enable_flags"))
+
+
+func _taps_enabled() -> bool:
+	if level_rules == null:
+		return true
+	return bool(level_rules.get("enable_taps"))
 
 
 func _session_turn_limit() -> int:
